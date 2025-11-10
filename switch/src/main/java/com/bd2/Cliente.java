@@ -15,15 +15,17 @@ public class Cliente {
 
             String xml = "<query><database>" + db + "</database><sql>" + sql + "</sql></query>";
 
-            String host = System.getProperty("switch.host", "switch");
-            int port = Integer.parseInt(System.getProperty("switch.port", "5000"));
+            String host = "127.0.0.1";
+            int port = 5000;
 
             try (Socket s = new Socket(host, port)) {
+                System.out.println("Conectado al switch en " + host + ":" + port);
                 s.setSoTimeout(30000);
                 OutputStream out = s.getOutputStream();
                 InputStream in = s.getInputStream();
                 out.write(xml.getBytes("UTF-8"));
                 out.flush();
+                System.out.println("Consulta enviada al switch.");
 
                 ByteArrayOutputStream resp = new ByteArrayOutputStream();
                 byte[] buf = new byte[1024];
