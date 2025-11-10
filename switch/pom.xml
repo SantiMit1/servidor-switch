@@ -46,6 +46,7 @@
 
     <build>
         <plugins>
+            <!--Compilacion-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -54,6 +55,7 @@
                     <target>25</target>
                 </configuration>
             </plugin>
+            <!--Para que se compile en 2 jars separados-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
