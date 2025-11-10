@@ -34,6 +34,7 @@ public class RequestHandler implements Runnable {
             InputStream in = s.getInputStream();
             OutputStream out = s.getOutputStream();
             String req = readUntilEndTag(in);
+            System.out.println("Solicitud recibida:\n" + req);
             XmlUtils.Query q = XmlUtils.parseQuery(req);
             DbRouter.QueryResult res = router.execute(q.database, q.sql);
             String resp = XmlUtils.buildResponse(res.cols, res.rows);
