@@ -1,0 +1,5 @@
+FROM eclipse-temurin:25-jdk
+WORKDIR /app
+COPY switch.jar /app/switch.jar
+EXPOSE 5000
+CMD ["java", "-cp", "switch.jar", "com.bd2.Server"]

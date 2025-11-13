@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: masterkey
+      POSTGRES_DB: personal
+    volumes:
+      - ./dbs/postgres/:/docker-entrypoint-initdb.d/
+    networks:
+      vnet:
+        ipv4_address: 10.0.0.2
+
+  firebird:
+    image: jacobalberty/firebird:3.0
+    environment:
+      ISC_PASSWORD: masterkey
+      FIREBIRD_DATABASE: facturacion
+    volumes:
+      - ./dbs/firebird/facturacion.fdb:/firebird/data/facturacion.fdb
+    networks:
+      vnet:
+        ipv4_address: 10.0.0.3
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    depends_on:
+      - postgres
+      - firebird
+    ports:
+      - "5000:5000"
+    networks:
+      vnet:
+        ipv4_address: 10.0.0.4
+
+networks:
+  vnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.0.0/24
